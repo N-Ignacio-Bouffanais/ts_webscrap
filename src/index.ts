@@ -1,6 +1,39 @@
-import { chromium, Page } from "playwright"
-import { bot, password, username, url } from "./bot"
+import { chromium } from "playwright";
+import { bot, password, username, url } from "./bot";
 
-export const authenticate = async (page:Page, username:string, password: string):Promise<void> => {
-  await page.goto(url)
-}
+
+// bot.command(["dafiti", "Dafiti", "DAFITI"],async (ctx) => {
+//   const browser = await chromium.launch()
+//   const page = await browser.newPage();
+//   await page.goto("http://10.115.43.118:3008/il/grafana/login");
+//   await page.getByLabel("Username input field").fill(username);
+//   await page.getByLabel("Password input field").fill(password);
+//   await page.getByLabel("Login button").click();
+//   // AWAIT for the page and take the screenshot
+//   await page.waitForURL("http://10.115.43.118:3008/il/grafana/?orgId=1");
+//   await page.goto("http://10.115.43.118:3008/il/grafana/d/sDmADcSIk/mle-flr?orgId=1&refresh=30s")
+// });
+
+bot.command(["hector"], async (ctx) => {
+  const browser = await chromium.launch();
+  const page = await browser.newPage();
+  await page.goto(url);
+  await page.getByLabel("Username or Email").fill(username);
+  await page.getByLabel("Password").fill(password);
+  const buttonByName = page.locator("#login")
+  await buttonByName.click();
+  // AWAIT for the page and take the screenshot
+  await page.goto("https://www.chess.com/today");
+  const buffer = await page.screenshot();
+  const chatId = ctx.message.chat.id;
+  console.log(buffer.toString("base64"));
+  const base64Screenshot = buffer.toString("base64");
+  ctx.sendMessage("chupalo")
+  ctx.sendPhoto("")
+  await browser.close();
+})
+
+
+
+//Iniciar el bot
+bot.launch()
