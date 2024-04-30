@@ -1,5 +1,5 @@
-import { chromium, Page } from "playwright";
-import { bot, password, username } from "./bot";
+import { Page } from "playwright";
+import { bot } from "./bot";
 
 export const authenticate = async (
   page: Page,
@@ -27,28 +27,5 @@ async function scrapeData(page: Page): Promise<any[]> {
   });
   return data;
 }
-
-async function runScraper() {
-  const browser = await chromium.launch();
-  const page = await browser.newPage();
-  await authenticate(page, username, password);
-  const data = await scrapeData(page);
-  console.log(data);
-  await browser.close();
-}
-
-bot.start(async (ctx) => {
-  ctx.reply("Iniciando...");
-  runScraper();
-});
-
-bot.command("robots", async (ctx) => {
-  ctx.reply("Cargando datos...");
-});
-
-bot.command("stop", async (ctx) => {
-  ctx.reply("Deteniendo el sistema...");
-  bot.stop();
-});
 
 bot.launch();

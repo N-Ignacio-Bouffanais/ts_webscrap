@@ -1,18 +1,5 @@
-import { chromium } from "playwright";
+import { Page, chromium } from "playwright";
 import { bot, password, username, url } from "./bot";
-
-
-// bot.command(["dafiti", "Dafiti", "DAFITI"],async (ctx) => {
-//   const browser = await chromium.launch()
-//   const page = await browser.newPage();
-//   await page.goto("http://10.115.43.118:3008/il/grafana/login");
-//   await page.getByLabel("Username input field").fill(username);
-//   await page.getByLabel("Password input field").fill(password);
-//   await page.getByLabel("Login button").click();
-//   // AWAIT for the page and take the screenshot
-//   await page.waitForURL("http://10.115.43.118:3008/il/grafana/?orgId=1");
-//   await page.goto("http://10.115.43.118:3008/il/grafana/d/sDmADcSIk/mle-flr?orgId=1&refresh=30s")
-// });
 
 bot.command(["dafiti","Dafiti","DAFITI"], async (ctx) => {
   const browser = await chromium.launch();
@@ -20,7 +7,7 @@ bot.command(["dafiti","Dafiti","DAFITI"], async (ctx) => {
   await page.goto(url);
   await page.getByLabel("Username or Email").fill(username);
   await page.getByLabel("Password").fill(password);
-  const buttonByName = page.locator("#login")
+  const buttonByName = page.locator("#login");
   await buttonByName.click();
   // AWAIT for the page and take the screenshot
   await page.goto("https://www.chess.com/today");
@@ -31,5 +18,36 @@ bot.command(["dafiti","Dafiti","DAFITI"], async (ctx) => {
   
   await browser.close();
 })
+
+bot.command(["Bots","bots","BOTS"], async (ctx) => {
+  const browser = await chromium.launch();
+  const page = await browser.newPage();
+  await page.goto(url);
+  await page.getByLabel("Username or Email").fill(username);
+  await page.getByLabel("Password").fill(password);
+  const buttonByName = page.locator("#login");
+  await buttonByName.click();
+  await page.goto("");
+  const nbots = await page.getByText("")
+
+  ctx.sendMessage("Ahora hay: " + nbots)
+  await browser.close();
+})
+
+
+bot.command(["tareas","Tareas","TAREAS"], async(ctx)=>{
+  const browser = await chromium.launch();
+  const page = await browser.newPage();
+  await page.goto(url);
+  await page.getByLabel("Username or Email").fill(username);
+  await page.getByLabel("Password").fill(password);
+  const buttonByName = page.locator("#login");
+  await buttonByName.click();
+  await page.goto("");
+  const tasks = await page.getByText("");
+  ctx.sendMessage("Ahora hay: " + tasks);
+  await browser.close();
+})
+
 //Iniciar el bot
 bot.launch()
